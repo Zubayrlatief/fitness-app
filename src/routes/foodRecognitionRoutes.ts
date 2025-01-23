@@ -1,10 +1,9 @@
-import { Router } from 'express';
-import { addFoodRecognitionRecord, getUserFoodRecords, upload } from '../controllers/foodRecognitionController';
-import { authenticate } from '../middleware/authMiddleware';
+import express from 'express';
+import { addFoodRecognitionRecord, upload } from '../controllers/foodRecognitionController';
 
-const router = Router();
+const router = express.Router();
 
-router.post('/add', authenticate, upload.single('photo'), addFoodRecognitionRecord);
-router.get('/:userID', authenticate, getUserFoodRecords);
+// Route for adding a food recognition record
+router.post('/food-recognition/add', upload.single('photo'), addFoodRecognitionRecord);
 
 export default router;
