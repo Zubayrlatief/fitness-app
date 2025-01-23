@@ -3,7 +3,10 @@ import express from 'express';
 import authRoutes from './routes/authRoutes';
 import foodRecognitionRoutes from './routes/foodRecognitionRoutes';
 
-dotenv.config();  // Call dotenv.config() once here
+dotenv.config(); // Load the environment variables
+
+console.log('Food API App ID:', process.env.FOOD_API_APP_ID); // Log API ID
+console.log('Food API App Key:', process.env.FOOD_API_APP_KEY); // Log API Key
 
 const app = express();
 
