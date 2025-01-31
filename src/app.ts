@@ -1,14 +1,14 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import cors from 'cors';
 import authRoutes from './routes/authRoutes';
-import foodRecognitionRoutes from './routes/foodRecognitionRoutes';
+import mealRoutes from './routes/mealRoutes';
 
 const app = express();
-app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads'));
+
+app.use(cors());
+app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/food', foodRecognitionRoutes);
-app.use('/food-recognition', foodRecognitionRoutes);
+app.use('/api/meals', mealRoutes);
 
 export default app;
