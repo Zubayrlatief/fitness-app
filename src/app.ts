@@ -1,14 +1,13 @@
 import express from 'express';
-import cors from 'cors';
-import authRoutes from './routes/authRoutes';
-import mealRoutes from './routes/mealRoutes';
+import { addMeal, getMeals } from '../controllers/mealController';
+import { authMiddleware } from '../middleware/authMiddleware';
 
-const app = express();
+const router = express.Router();
 
-app.use(cors());
-app.use(express.json());
+// Route for adding a new meal
+router.post('/add', authMiddleware, addMeal);
 
-app.use('/api/auth', authRoutes);
-app.use('/api/meals', mealRoutes);
+// Route for fetching all meals
+router.get('/', authMiddleware, getMeals);
 
-export default app;
+export default router;

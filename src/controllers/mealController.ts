@@ -42,3 +42,4 @@ export const getMeals = async (req: Request, res: Response): Promise<Response> =
         return res.status(500).json({ message: 'Failed to fetch meals' });
     }
 };
+

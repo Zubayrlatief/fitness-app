@@ -3,10 +3,10 @@ import jwt from 'jsonwebtoken';
 
 // Extend Request type to include the user property
 interface AuthenticatedRequest extends Request {
-  user?: any; // You can replace 'any' with a specific type if you have a User interface
+  user?: any; // Replace 'any' with a specific type if you have a User interface
 }
 
-const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.header('Authorization')?.split(' ')[1];
 
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
@@ -19,5 +19,3 @@ const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunc
     res.status(401).json({ message: 'Invalid Token' });
   }
 };
-
-export { authMiddleware };
