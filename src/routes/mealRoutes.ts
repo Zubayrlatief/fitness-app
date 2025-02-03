@@ -1,16 +1,26 @@
-import express from 'express';
-import { addMeal, getMeals } from '../controllers/mealController';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
-const router = express.Router();
 
-// Updated to handle async/await properly
-router.post('/add', authMiddleware, async (req, res) => {
-    await addMeal(req, res); // Ensure async function returns a valid response
-});
-router.get('/', authMiddleware, async (req, res) => {
-    await getMeals(req, res); // Ensure async function returns a valid response
-});
+// Define a custom request type to include 'user'
+export interface AuthenticatedRequest extends Request {
+  user?: any; // Replace 'any' with your actual user type if available
+}
 
-export default router;
+const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  const token = req.header('Authorization')?.split(' ')[1];
 
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    req.user = decoded; // Attach decoded user to req
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid Token' });
+  }
+};
+
+export { authMiddleware };
