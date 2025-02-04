@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+
 // Extend Request type to include the user property
 interface AuthenticatedRequest extends Request {
   user?: any; // Replace 'any' with a specific type if you have a User interface
@@ -19,3 +20,4 @@ export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: N
     res.status(401).json({ message: 'Invalid Token' });
   }
 };
+
